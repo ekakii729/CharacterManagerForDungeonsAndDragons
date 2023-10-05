@@ -39,14 +39,12 @@ public class CharacterIO {
                 characters[i].setDexterity(Integer.parseInt(reader.readLine()));
                 characters[i].setCharisma(Integer.parseInt(reader.readLine()));
                 i++;
-            }
-            reader.close();
+            } reader.close();
         } catch (FileNotFoundException FNFe) {
             System.out.println("FILE NOT FOUND, CHECK NAME OF PASSED FILE --> " + FNFe);
         } catch (IOException e) {
             System.out.println("ERROR --> " + e);
-        }
-        return i;
+        } return i;
     }
 
     /**
@@ -73,8 +71,7 @@ public class CharacterIO {
         for (int i = 0; i < numberOfRecords; i++) {
             characters[i] = new Character();
             characters[i].readRecord(randomAccessor, i);
-        }
-        randomAccessor.close();
+        } randomAccessor.close();
         return numberOfRecords;
     }
 }

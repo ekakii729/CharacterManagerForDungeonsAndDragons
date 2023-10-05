@@ -22,9 +22,7 @@ public class CharacterManager {
      */
 
     public static void printAllCharacters(Character[] characters) {
-        for (Character character : characters) {
-            if (!character.hasEmptyValue()) character.display();
-        }
+        for (Character character : characters) if (!character.hasEmptyValue()) character.display();
     }
 
     /**
