@@ -1,0 +1,66 @@
+Malloc Dragonslayer
+Human
+Warrior
+5
+45
+12
+10
+11
+12
+14
+10
+Garrick LeafStepper
+Elf
+Ranger
+4
+20
+9
+8
+13
+11
+17
+15
+Uncle Trapspringer
+Halfling
+Rogue
+2
+10
+9
+8
+13
+11
+19
+11
+Dordaek Stoutfellow
+Dwarf
+Cleric
+6
+39
+14
+16
+9
+5
+13
+3
+Ugh SingleTooth
+Orc
+Warrior
+3
+26
+19
+17
+7
+11
+13
+3
+Aerodym Conundrum
+Gnome
+Mage
+7
+14
+7
+9
+17
+14
+9
+10
