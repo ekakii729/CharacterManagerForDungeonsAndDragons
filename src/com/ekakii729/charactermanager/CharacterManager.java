@@ -88,6 +88,17 @@ public class CharacterManager {
         System.out.println();
         characters = removeCharacter("Ugh SingleTooth", characters);
         System.out.println();
+        CharacterIO.writeToBinaryFile("Characters.bin", characters);
+        System.out.println("File has been written.");
+        System.out.println();
+        recs = CharacterIO.readBinaryFile("Characters.bin", characters);
+        printAllCharacters(characters);
+        System.out.println();
+        characters = removeCharacter("Uncle Trapspringer", characters);
+        CharacterIO.writeToBinaryFile("Characters.bin", characters);
+        System.out.println("file has been written.");
+        System.out.println();
+        recs = CharacterIO.readBinaryFile("Characters.bin", characters);
         printAllCharacters(characters);
     }
 }
