@@ -79,7 +79,7 @@ public class CharacterIO {
 
     public static int readBinaryFile(String fileName, Character[] characters) throws IOException {
         RandomAccessFile randomAccessor = new RandomAccessFile(fileName, "rw"); // used to write binary file
-        int numberOfRecords = (int) (randomAccessor.length() / Character.getRecordLength());
+        int numberOfRecords = (int) (randomAccessor.length() / Character.getRecordLength()); // number of records in the binary file
         for (int i = 0; i < numberOfRecords; i++) {
             characters[i] = new Character();
             characters[i].readRecord(randomAccessor, i);
