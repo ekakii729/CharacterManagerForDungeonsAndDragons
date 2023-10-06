@@ -65,6 +65,18 @@ public class CharacterIO {
         randomAccessor.close();
     }
 
+    /**
+     * Method Name: readBinaryFile
+     * @Author Abhay Manoj
+     * @Date October 4, 2023
+     * @Modified October 4, 2023
+     * @Description Reads content of binary file and puts information in characters array
+     * @Parameters fileName - the name of the file, characters - list of characters
+     * @Returns The number of records in the file, Data Type: Integer
+     * Dependencies: RandomAccessFile
+     * Throws/Exceptions: IOException
+     */
+
     public static int readBinaryFile(String fileName, Character[] characters) throws IOException {
         RandomAccessFile randomAccessor = new RandomAccessFile(fileName, "rw"); // used to write binary file
         int numberOfRecords = (int) (randomAccessor.length() / Character.getRecordLength());
