@@ -205,4 +205,24 @@ public class CharacterUtils {
         } System.out.println(characterName + " was not found. PLease try again.");
         return characters;
     }
+
+    /** Method Name: searchForCharacter
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 7, 2023
+     * @Description Searches for a character and displays their stats
+     * @Parameters characterName - the name of the character characters - list of characters
+     * @Returns N/A, Data Type: Void
+     * Dependencies: N/A
+     * Throws/Exceptions: N/A
+     */
+
+    public void searchForCharacter(String characterName, Character[] characters) {
+        for (Character character : characters) {
+            if (character.getName().equals(characterName)) {
+                character.display();
+                break;
+            }
+        }
+    }
 }
