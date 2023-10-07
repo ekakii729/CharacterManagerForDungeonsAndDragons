@@ -31,7 +31,7 @@ public class CharacterManager {
      * @Date October 6, 2023
      * @Modified October 6, 2023
      * @Description Prints a character record
-     * @Parameters characterName - name of character that is being searched for, characters- list of characters
+     * @Parameters characterName - name of character that is being searched for, characters - list of characters
      * @Returns N/A, Data Type: Void
      * Dependencies: N/A
      * Throws/Exceptions: N/A
