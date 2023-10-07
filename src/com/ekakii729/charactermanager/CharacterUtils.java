@@ -173,4 +173,36 @@ public class CharacterUtils {
     public void printAllCharacters(Character[] characters) {
         for (Character character : characters) character.display();
     }
+
+    /** Method Name: deleteCharacter
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 7, 2023
+     * @Description Deletes a character by their name
+     * @Parameters characterName - the name of the character characters - list of characters
+     * @Returns The character array without the given character, Data Type: Character[]
+     * Dependencies: N/A
+     * Throws/Exceptions: N/A
+     */
+
+    public Character[] deleteCharacter(String characterName, Character[] characters) {
+        Character[] newCharacters = null; // the new array of characters
+        boolean hasBeenFound = false; // checking if the character has been found
+        int indexOfCharacter = -1; // index of the character if they are found
+        for (int i = 0; i < characters.length; i++) {
+            if (characters[i].getName().equals(characterName)) {
+                indexOfCharacter = i;
+                hasBeenFound = true;
+                newCharacters = createCharacterArray(characters.length - 1);
+                break; }
+        } if (hasBeenFound) {
+            int newCharacterPointer = 0; // pointer to access indexes of new character array
+            for (int i = 0; i < characters.length; i++) {
+                if (i == indexOfCharacter) continue;
+                newCharacters[newCharacterPointer] = characters[i];
+                newCharacterPointer++;
+            } return newCharacters;
+        } System.out.println(characterName + " was not found. PLease try again.");
+        return characters;
+    }
 }

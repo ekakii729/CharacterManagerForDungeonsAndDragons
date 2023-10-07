@@ -15,6 +15,9 @@ public class CharacterManager {
         Character[] characters = helper.createCharacterArray(numOfRecords);
         helper.readFromTextFile(tName, characters);
         helper.printAllCharacters(characters);
+        characters = helper.deleteCharacter("Ugh SingleTooth", characters);
+        System.out.println();
+        helper.printAllCharacters(characters);
         helper.writeToFile(bName, characters);
         numOfRecords = helper.getBinaryNumOfRecords(bName);
         characters = helper.createCharacterArray(numOfRecords);
