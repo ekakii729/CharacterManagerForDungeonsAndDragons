@@ -31,7 +31,7 @@ public class CharacterManager {
      * @Date October 6, 2023
      * @Modified October 6, 2023
      * @Description Prints a character record
-     * @Parameters characterName - name of character that is being searched for characters - list of characters
+     * @Parameters characterName - name of character that is being searched for, characters- list of characters
      * @Returns N/A, Data Type: Void
      * Dependencies: N/A
      * Throws/Exceptions: N/A
@@ -54,7 +54,7 @@ public class CharacterManager {
      * @Date October 6, 2023
      * @Modified October 6, 2023
      * @Description Removes a character from the array
-     * @Parameters characterName - name of character that is being searched for characters - list of characters
+     * @Parameters characterName - name of character that is being searched for, characters - list of characters
      * @Returns The array of characters minus the removed character, Data Type: Character[]
      * Dependencies: N/A
      * Throws/Exceptions: N/A
@@ -99,6 +99,11 @@ public class CharacterManager {
         System.out.println("file has been written.");
         System.out.println();
         recs = CharacterIO.readBinaryFile("Characters.bin", characters);
+        printAllCharacters(characters);
+        characters = removeCharacter("Malloc Dragonslayer", characters);
+        CharacterIO.writeToBinaryFile("Characters.bin", characters);
+        recs = CharacterIO.readBinaryFile("Characters.bin", characters);
+        System.out.println();
         printAllCharacters(characters);
     }
 }
