@@ -5,7 +5,6 @@
  */
 
 package com.ekakii729.charactermanager;
-
 import java.io.*;
 import java.util.Scanner;
 
@@ -26,7 +25,7 @@ public class CharacterUtils {
      * @Date October 7, 2023
      * @Modified October 7, 2023
      * @Description Writes content of character array to binary file
-     * @Parameters fileName - name of the file, characters - list of characters
+     * @Parameters fileName - name of the file
      * @Returns N/A, Data Type: Void
      * Dependencies: RandomAccessFile
      * Throws/Exceptions: IOException
@@ -48,7 +47,7 @@ public class CharacterUtils {
      * @Date October 7, 2023
      * @Modified October 7, 2023
      * @Description Reads content of binary file and writes to character array
-     * @Parameters fileName - name of the file, characters - list of characters
+     * @Parameters fileName - name of the file
      * @Returns N/A, Data Type: Void
      * Dependencies: RandomAccessFile
      * Throws/Exceptions: FileNotFoundException, IOException
@@ -73,7 +72,7 @@ public class CharacterUtils {
      * @Date October 7, 2023
      * @Modified October 7, 2023
      * @Description Reads content of text file and writes to character array
-     * @Parameters fileName - name of the file, characters - list of characters
+     * @Parameters fileName - name of the file
      * @Returns N/A, Data Type: Void
      * Dependencies: BufferedReader, FileReader
      * Throws/Exceptions: FileNotFoundException, IOException
@@ -110,7 +109,7 @@ public class CharacterUtils {
      * @Date October 7, 2023
      * @Modified October 7, 2023
      * @Description Prints all characters in array
-     * @Parameters characters - list of characters
+     * @Parameters N/A
      * @Returns N/A, Data Type: Void
      * Dependencies: N/A
      * Throws/Exceptions: N/A
@@ -125,8 +124,8 @@ public class CharacterUtils {
      * @Date October 7, 2023
      * @Modified October 7, 2023
      * @Description Deletes a character by their name
-     * @Parameters characterName - the name of the character characters - list of characters
-     * @Returns The character array without the given character, Data Type: Character[]
+     * @Parameters characterName - the name of the character
+     * @Returns N/A, Data Type: Void
      * Dependencies: N/A
      * Throws/Exceptions: N/A
      */
@@ -139,7 +138,7 @@ public class CharacterUtils {
             if (characters[i].getName().equals(characterName)) {
                 indexOfCharacter = i;
                 hasBeenFound = true;
-                newCharacters = new Character[characters.length -1];
+                newCharacters = new Character[characters.length - 1];
                 break; }
         } if (hasBeenFound) {
             int newCharacterPointer = 0; // pointer to access indexes of new character array
@@ -156,7 +155,7 @@ public class CharacterUtils {
      * @Date October 7, 2023
      * @Modified October 7, 2023
      * @Description Searches for a character and displays their stats
-     * @Parameters characterName - the name of the character characters - list of characters
+     * @Parameters characterName - the name of the character
      * @Returns The index of the character, Data Type: Integer
      * Dependencies: N/A
      * Throws/Exceptions: N/A
@@ -176,91 +175,99 @@ public class CharacterUtils {
      * @Author Abhay Manoj
      * @Date October 7, 2023
      * @Modified October 7, 2023
-     * @Description Adds new empty character to list
+     * @Description Adds new empty character to character array
      * @Parameters characters - list of characters
-     * @Returns The array of characters including new character, Data Type: Character[]
+     * @Returns N/A, Data Type: Void
      * Dependencies: N/A
      * Throws/Exceptions: N/A
      */
 
     public void addNewCharacterToList() {
-        Character[] newCharacters = new Character[characters.length + 1];
-        for (int i = 0; i < characters.length; i++) newCharacters[i] = characters[i];
+        Character[] newCharacters = new Character[characters.length + 1]; // new array that will contain new character
+        System.arraycopy(characters, 0, newCharacters, 0, characters.length);
         int newCharacterIndex = newCharacters.length -1; // the index of the new character
-        newCharacters[newCharacterIndex]  = new Character();
-        newCharacters[newCharacterIndex].setName("John Smith");
+        newCharacters[newCharacterIndex] = new Character();
+        newCharacters[newCharacterIndex].setName("John Doe"); // base template
         newCharacters[newCharacterIndex].setRace("Human");
         newCharacters[newCharacterIndex].setClassOfCharacter("Warrior");
         characters = newCharacters;
     }
 
+    /** Method Name: updateStats
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 7, 2023
+     * @Description Submenu to update stats of a character
+     * @Parameters N/A
+     * @Returns N/A, Data Type: Void
+     * Dependencies: N/A
+     * Throws/Exceptions: N/A
+     */
+
     public void updateStats(Scanner input) {
         System.out.print("\nEnter the name of the character that you wish to modify: ");
-        int characterIndex = searchForCharacter(input.nextLine());
+        int characterIndex = searchForCharacter(input.nextLine()); // index of the character that is being searched for
         if (characterIndex != -1) {
-            String stringChoice;
-            int intChoice;
+            String stringChoice; // if the user enters a string
+            int intChoice; // if the user enters an int
             System.out.println("\nWhat would you like to modify?\n1. Name\n2. Race\n3. Class\n4. Level \n5. HitPoints \n6. Strength\n7. Constitution\n8. Intelligence\n9. Wisdom\n10. Dexterity\n11. Charisma");
             intChoice = Integer.parseInt(input.nextLine());
             switch (intChoice) {
-                case 1:
+                case 1 -> {
                     System.out.print("Enter their name: ");
                     stringChoice = input.nextLine();
                     characters[characterIndex].setName(stringChoice);
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.print("Enter their race: ");
                     stringChoice = input.nextLine();
                     characters[characterIndex].changeRace(stringChoice);
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     System.out.print("Enter their class: ");
                     stringChoice = input.nextLine();
                     characters[characterIndex].changeClass(stringChoice);
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     System.out.print("Enter their level: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setLevel(intChoice);
-                    break;
-                case 5:
+                }
+                case 5 -> {
                     System.out.print("Enter their HitPoints: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setHitPoints(intChoice);
-                    break;
-                case 6:
+                }
+                case 6 -> {
                     System.out.print("Enter their strength: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setStrength(intChoice);
-                    break;
-                case 7:
+                }
+                case 7 -> {
                     System.out.print("Enter their constitution: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setConstitution(intChoice);
-                    break;
-                case 8:
+                }
+                case 8 -> {
                     System.out.print("Enter their intelligence: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setIntelligence(intChoice);
-                    break;
-                case 9:
+                }
+                case 9 -> {
                     System.out.print("Enter their wisdom: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setWisdom(intChoice);
-                    break;
-                case 10:
+                }
+                case 10 -> {
                     System.out.print("Enter their dexterity: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setDexterity(intChoice);
-                    break;
-                case 11:
+                }
+                case 11 -> {
                     System.out.print("Enter their charisma: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setCharisma(intChoice);
-                    break;
-                default:
-                    System.out.println("Not a valid option, try again.");
-                    break;
+                } default -> System.out.println("Not a valid option, try again.");
             }
         }
     }
