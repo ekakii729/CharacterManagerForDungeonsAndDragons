@@ -152,12 +152,14 @@ public class Character {
         final int MAX_ROGUE_INCREASE = 6; // rogues hit points go up by 6 points max
         final int MAX_MAGE_INCREASE = 4; // mages hit points go up by 4 points max
         switch (classOfCharacter) {
-            case "Warrior": increaseHitPoints = diceRoll(MAX_WARRIOR_INCREASE); break;
-            case "Cleric": increaseHitPoints = diceRoll(MAX_CLERIC_INCREASE); break;
-            case "Ranger", "Bard", "Rogue", "Range": increaseHitPoints = diceRoll(MAX_ROGUE_INCREASE); break;
-            case "Mage": increaseHitPoints = diceRoll(MAX_MAGE_INCREASE); break;
-            default: break;
-        } return increaseHitPoints;
+            case "Warrior" -> increaseHitPoints = diceRoll(MAX_WARRIOR_INCREASE);
+            case "Cleric" -> increaseHitPoints = diceRoll(MAX_CLERIC_INCREASE);
+            case "Ranger", "Bard", "Rogue", "Range" -> increaseHitPoints = diceRoll(MAX_ROGUE_INCREASE);
+            case "Mage" -> increaseHitPoints = diceRoll(MAX_MAGE_INCREASE);
+            default -> {
+            }
+        }
+        return increaseHitPoints;
     }
 
     /** Method Name: levelUp
@@ -211,13 +213,28 @@ public class Character {
     private void convertToHuman() {
         final String NEW_RACE = "Human"; // the race that the character will be changed to
         switch (race) {
-            case "Halfling": dexterity -= 2; constitution--; break;
-            case "Elf": dexterity -= 3; constitution += 2; break;
-            case "Dwarf": constitution -= 3; break;
-            case "Orc": strength -= 3; constitution--; break;
-            case "Gnome": intelligence -= 2; wisdom--; strength += 3; break;
-            default: break;
-        } race = NEW_RACE;
+            case "Halfling" -> {
+                dexterity -= 2;
+                constitution--;
+            }
+            case "Elf" -> {
+                dexterity -= 3;
+                constitution += 2;
+            }
+            case "Dwarf" -> constitution -= 3;
+            case "Orc" -> {
+                strength -= 3;
+                constitution--;
+            }
+            case "Gnome" -> {
+                intelligence -= 2;
+                wisdom--;
+                strength += 3;
+            }
+            default -> {
+            }
+        }
+        race = NEW_RACE;
     }
 
     /** Method Name: changeRace
@@ -234,13 +251,28 @@ public class Character {
     public void changeRace(String newRace) {
         convertToHuman();
         switch (newRace) {
-            case "Halfling": dexterity += 2; constitution++; break;
-            case "Elf": dexterity += 3; constitution -= 2; break;
-            case "Dwarf": constitution += 3; break;
-            case "Orc": strength += 3; constitution++; break;
-            case "Gnome": intelligence += 2; wisdom++; strength -= 3; break;
-            default: break;
-        } race = newRace;
+            case "Halfling" -> {
+                dexterity += 2;
+                constitution++;
+            }
+            case "Elf" -> {
+                dexterity += 3;
+                constitution -= 2;
+            }
+            case "Dwarf" -> constitution += 3;
+            case "Orc" -> {
+                strength += 3;
+                constitution++;
+            }
+            case "Gnome" -> {
+                intelligence += 2;
+                wisdom++;
+                strength -= 3;
+            }
+            default -> {
+            }
+        }
+        race = newRace;
     }
 
     /**

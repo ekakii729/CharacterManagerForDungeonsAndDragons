@@ -217,53 +217,43 @@ public class CharacterUtils {
                     System.out.print("Enter their name: ");
                     stringChoice = input.nextLine();
                     characters[characterIndex].setName(stringChoice);
-                }
-                case 2 -> {
+                } case 2 -> {
                     System.out.print("Enter their race: ");
                     stringChoice = input.nextLine();
                     characters[characterIndex].changeRace(stringChoice);
-                }
-                case 3 -> {
+                } case 3 -> {
                     System.out.print("Enter their class: ");
                     stringChoice = input.nextLine();
                     characters[characterIndex].changeClass(stringChoice);
-                }
-                case 4 -> {
+                } case 4 -> {
                     System.out.print("Enter their level: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setLevel(intChoice);
-                }
-                case 5 -> {
+                } case 5 -> {
                     System.out.print("Enter their HitPoints: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setHitPoints(intChoice);
-                }
-                case 6 -> {
+                } case 6 -> {
                     System.out.print("Enter their strength: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setStrength(intChoice);
-                }
-                case 7 -> {
+                } case 7 -> {
                     System.out.print("Enter their constitution: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setConstitution(intChoice);
-                }
-                case 8 -> {
+                } case 8 -> {
                     System.out.print("Enter their intelligence: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setIntelligence(intChoice);
-                }
-                case 9 -> {
+                } case 9 -> {
                     System.out.print("Enter their wisdom: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setWisdom(intChoice);
-                }
-                case 10 -> {
+                } case 10 -> {
                     System.out.print("Enter their dexterity: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setDexterity(intChoice);
-                }
-                case 11 -> {
+                } case 11 -> {
                     System.out.print("Enter their charisma: ");
                     intChoice = Integer.parseInt(input.nextLine());
                     characters[characterIndex].setCharisma(intChoice);
