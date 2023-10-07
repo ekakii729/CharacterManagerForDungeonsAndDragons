@@ -338,23 +338,6 @@ public class Character {
     }
 
     /**
-     * Method Name: hasEmptyValue
-     * @Author Abhay Manoj
-     * @Date October 4, 2023
-     * @Modified October 4, 2023
-     * @Description Checks if any variable has not yet been assigned a value
-     * @Parameters N/A
-     * @Returns If there is an empty value, Data Type: Boolean
-     * Dependencies: N/A
-     * Throws/Exceptions: N/A
-     */
-
-    public boolean hasEmptyValue() {
-        if (name == null || race == null || classOfCharacter == null || level == -1 || hitPoints == -1 || strength == -1 || constitution == -1 || intelligence == -1 || wisdom == -1 || dexterity == -1 || charisma == -1) return true;
-        return false;
-    }
-
-    /**
      * Method Name: display
      * @Author Abhay Manoj
      * @Date October 4, 2023

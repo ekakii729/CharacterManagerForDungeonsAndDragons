@@ -21,7 +21,7 @@ public class CharacterUtils {
      * Throws/Exceptions: FileNotFoundException, IOException
      */
 
-    public static int getBinaryNumOfRecords(String fileName) {
+    public int getBinaryNumOfRecords(String fileName) {
         try {
             RandomAccessFile randomAccessor = new RandomAccessFile(fileName, "rw"); // accesses binary file
             long fileSize = randomAccessor.length(); // size of the binary file in bytes
@@ -45,10 +45,10 @@ public class CharacterUtils {
      * Throws/Exceptions: FileNotFoundException, IOException
      */
 
-    public static int getTextNumOfRecords(String fileName) {
+    public int getTextNumOfRecords(String fileName) {
         int numberOfRecords = 0; // number of records within the file
         try {
-            BufferedReader recordPointer = new BufferedReader(new FileReader(fileName)); // accesses the records within the file
+            BufferedReader recordPointer = new BufferedReader(new FileReader(fileName)); // accesses text file
             while (recordPointer.ready()) {
                 recordPointer.readLine();
                 numberOfRecords++;
@@ -71,7 +71,106 @@ public class CharacterUtils {
      * Throws/Exceptions: N/A
      */
 
-    public static Character[] createCharacterArray(int size) {
+    public Character[] createCharacterArray(int size) {
         return new Character[size];
+    }
+
+    /** Method Name: writeToFile
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 7, 2023
+     * @Description Writes content of character array to binary file
+     * @Parameters fileName - name of the file, characters - list of characters
+     * @Returns N/A, Data Type: Void
+     * Dependencies: RandomAccessFile
+     * Throws/Exceptions: IOException
+     */
+
+    public void writeToFile(String fileName, Character[] characters) {
+        try {
+            RandomAccessFile randomAccessor = new RandomAccessFile(fileName, "rw"); // accesses binary file
+            randomAccessor.setLength(characters.length * Character.getRecordLength());
+            for (int i = 0; i < characters.length; i++) characters[i].writeRecord(randomAccessor, i);
+            randomAccessor.close();
+        } catch (IOException e) {
+            System.out.println("I/O ERROR --> " + e);
+        }
+    }
+
+    /** Method Name: readFromBinaryFile
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 7, 2023
+     * @Description Reads content of binary file and writes to character array
+     * @Parameters fileName - name of the file, characters - list of characters
+     * @Returns N/A, Data Type: Void
+     * Dependencies: RandomAccessFile
+     * Throws/Exceptions: FileNotFoundException, IOException
+     */
+
+    public void readFromBinaryFile(String fileName, Character[] characters) {
+        try {
+            RandomAccessFile randomAccessor = new RandomAccessFile(fileName, "rw"); // access binary file
+            for (int i = 0; i < characters.length; i++) {
+                characters[i] = new Character();
+                characters[i].readRecord(randomAccessor, i);
+            } randomAccessor.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("FILE NOT FOUND ERROR, CHECK WHERE FILE WAS PLACED --> " + e);
+        } catch (IOException e) {
+            System.out.println("I/O ERROR --> " + e);
+        }
+    }
+
+    /** Method Name: readFromTextFile
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 7, 2023
+     * @Description Reads content of text file and writes to character array
+     * @Parameters fileName - name of the file, characters - list of characters
+     * @Returns N/A, Data Type: Void
+     * Dependencies: BufferedReader, FileReader
+     * Throws/Exceptions: FileNotFoundException, IOException
+     */
+
+    public void readFromTextFile(String fileName, Character[] characters) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName)); // accesses text file
+            int i = 0; // counter to access indexes of character array
+            while (reader.ready()) {
+                characters[i] = new Character();
+                characters[i].setName(reader.readLine());
+                characters[i].setRace(reader.readLine());
+                characters[i].setClassOfCharacter(reader.readLine());
+                characters[i].setLevel(Integer.parseInt(reader.readLine()));
+                characters[i].setHitPoints(Integer.parseInt(reader.readLine()));
+                characters[i].setStrength(Integer.parseInt(reader.readLine()));
+                characters[i].setConstitution(Integer.parseInt(reader.readLine()));
+                characters[i].setIntelligence(Integer.parseInt(reader.readLine()));
+                characters[i].setWisdom(Integer.parseInt(reader.readLine()));
+                characters[i].setDexterity(Integer.parseInt(reader.readLine()));
+                characters[i].setCharisma(Integer.parseInt(reader.readLine()));
+                i++;
+            } reader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("FILE NOT FOUND ERROR, CHECK WHERE FILE WAS PLACED --> " + e);
+        } catch (IOException e) {
+            System.out.println("I/O ERROR --> " + e);
+        }
+    }
+
+    /** Method Name: printAllCharacters
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 7, 2023
+     * @Description Prints all characters in array
+     * @Parameters characters - list of characters
+     * @Returns N/A, Data Type: Void
+     * Dependencies: N/A
+     * Throws/Exceptions: N/A
+     */
+
+    public void printAllCharacters(Character[] characters) {
+        for (Character character : characters) character.display();
     }
 }
