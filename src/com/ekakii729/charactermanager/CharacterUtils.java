@@ -11,69 +11,14 @@ import java.util.Scanner;
 
 public class CharacterUtils {
 
-    /** Method Name: getBinaryNumOfRecords
-     * @Author Abhay Manoj
-     * @Date October 7, 2023
-     * @Modified October 7, 2023
-     * @Description Gets the number of records within a binary file
-     * @Parameters fileName - the name of the file being accessed
-     * @Returns The number of records, Data Type: Integer
-     * Dependencies: RandomAccessFile
-     * Throws/Exceptions: FileNotFoundException, IOException
-     */
+    private Character[] characters;
 
-    public int getBinaryNumOfRecords(String fileName) {
-        try {
-            RandomAccessFile randomAccessor = new RandomAccessFile(fileName, "rw"); // accesses binary file
-            long fileSize = randomAccessor.length(); // size of the binary file in bytes
-            randomAccessor.close();
-            return (int) (fileSize / Character.getRecordLength());
-        } catch (FileNotFoundException e) {
-            System.out.println("FILE NOT FOUND ERROR, CHECK WHERE FILE WAS PLACED --> " + e);
-        } catch (IOException e) {
-            System.out.println("I/O ERROR --> " + e);
-        } return -1;
+    public CharacterUtils() {
+
     }
 
-    /** Method Name: getTextNumOfRecords
-     * @Author Abhay Manoj
-     * @Date October 7, 2023
-     * @Modified October 7, 2023
-     * @Description Gets the number of records within a text file
-     * @Parameters fileName - the name of the file being accessed
-     * @Returns The number of records, Data Type: Integer
-     * Dependencies: BufferedReader, FileReader
-     * Throws/Exceptions: FileNotFoundException, IOException
-     */
-
-    public int getTextNumOfRecords(String fileName) {
-        int numberOfRecords = 0; // number of records within the file
-        try {
-            BufferedReader recordPointer = new BufferedReader(new FileReader(fileName)); // accesses text file
-            while (recordPointer.ready()) {
-                recordPointer.readLine();
-                numberOfRecords++;
-            } recordPointer.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("FILE NOT FOUND ERROR, CHECK WHERE FILE WAS PLACED --> " + e);
-        } catch (IOException e) {
-            System.out.println("I/O ERROR --> " + e);
-        } return numberOfRecords / 11; // 11 lines in 1 record
-    }
-
-    /** Method Name: createCharacterArray
-     * @Author Abhay Manoj
-     * @Date October 7, 2023
-     * @Modified October 7, 2023
-     * @Description Returns null array of characters
-     * @Parameters size - size of array
-     * @Returns Array of characters, Data Type: Character[]
-     * Dependencies: N/A
-     * Throws/Exceptions: N/A
-     */
-
-    public Character[] createCharacterArray(int size) {
-        return new Character[size];
+    public CharacterUtils(int size) {
+        characters = new Character[size];
     }
 
     /** Method Name: writeToFile
@@ -87,7 +32,7 @@ public class CharacterUtils {
      * Throws/Exceptions: IOException
      */
 
-    public void writeToFile(String fileName, Character[] characters) {
+    public void writeToFile(String fileName) {
         try {
             RandomAccessFile randomAccessor = new RandomAccessFile(fileName, "rw"); // accesses binary file
             randomAccessor.setLength(characters.length * Character.getRecordLength());
@@ -109,7 +54,7 @@ public class CharacterUtils {
      * Throws/Exceptions: FileNotFoundException, IOException
      */
 
-    public void readFromBinaryFile(String fileName, Character[] characters) {
+    public void readFromBinaryFile(String fileName) {
         try {
             RandomAccessFile randomAccessor = new RandomAccessFile(fileName, "rw"); // access binary file
             for (int i = 0; i < characters.length; i++) {
@@ -134,7 +79,7 @@ public class CharacterUtils {
      * Throws/Exceptions: FileNotFoundException, IOException
      */
 
-    public void readFromTextFile(String fileName, Character[] characters) {
+    public void readFromTextFile(String fileName) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName)); // accesses text file
             int i = 0; // counter to access indexes of character array
@@ -171,7 +116,7 @@ public class CharacterUtils {
      * Throws/Exceptions: N/A
      */
 
-    public void printAllCharacters(Character[] characters) {
+    public void printAllCharacters() {
         for (Character character : characters) character.display();
     }
 
@@ -186,7 +131,7 @@ public class CharacterUtils {
      * Throws/Exceptions: N/A
      */
 
-    public Character[] deleteCharacterFromList(String characterName, Character[] characters) {
+    public void deleteCharacterFromList(String characterName) {
         Character[] newCharacters = null; // the new array of characters
         boolean hasBeenFound = false; // checking if the character has been found
         int indexOfCharacter = -1; // index of the character if they are found
@@ -194,7 +139,7 @@ public class CharacterUtils {
             if (characters[i].getName().equals(characterName)) {
                 indexOfCharacter = i;
                 hasBeenFound = true;
-                newCharacters = createCharacterArray(characters.length - 1);
+                newCharacters = new Character[characters.length -1];
                 break; }
         } if (hasBeenFound) {
             int newCharacterPointer = 0; // pointer to access indexes of new character array
@@ -202,9 +147,8 @@ public class CharacterUtils {
                 if (i == indexOfCharacter) continue;
                 newCharacters[newCharacterPointer] = characters[i];
                 newCharacterPointer++;
-            } return newCharacters;
+            } characters = newCharacters;
         } System.out.println(characterName + " was not found. PLease try again.");
-        return characters;
     }
 
     /** Method Name: searchForCharacter
@@ -218,16 +162,13 @@ public class CharacterUtils {
      * Throws/Exceptions: N/A
      */
 
-    public int searchForCharacter(String characterName, Character[] characters) {
-        boolean hasBeenFound = false; // checking if the character has been found or not
+    public int searchForCharacter(String characterName) {
         for (int i = 0; i < characters.length; i++) {
             if (characters[i].getName().equals(characterName)) {
                 characters[i].display();
-                hasBeenFound = true;
                 return i;
             }
-        }
-        if (!hasBeenFound) System.out.println(characterName + " was not found, please try again.");
+        } System.out.println(characterName + " was not found, please try again.");
         return -1;
     }
 
@@ -242,20 +183,20 @@ public class CharacterUtils {
      * Throws/Exceptions: N/A
      */
 
-    public Character[] addNewCharacterToList(Character[] characters) {
-        Character[] newCharacters = createCharacterArray(characters.length + 1); // the new array of characters
-        System.arraycopy(characters, 0, newCharacters, 0, characters.length);
+    public void addNewCharacterToList() {
+        Character[] newCharacters = new Character[characters.length + 1];
+        for (int i = 0; i < characters.length; i++) newCharacters[i] = characters[i];
         int newCharacterIndex = newCharacters.length -1; // the index of the new character
         newCharacters[newCharacterIndex]  = new Character();
         newCharacters[newCharacterIndex].setName("John Smith");
         newCharacters[newCharacterIndex].setRace("Human");
         newCharacters[newCharacterIndex].setClassOfCharacter("Warrior");
-        return newCharacters;
+        characters = newCharacters;
     }
 
-    public void updateStats(Scanner input, Character[] characters) {
+    public void updateStats(Scanner input) {
         System.out.print("\nEnter the name of the character that you wish to modify: ");
-        int characterIndex = searchForCharacter(input.nextLine(), characters);
+        int characterIndex = searchForCharacter(input.nextLine());
         if (characterIndex != -1) {
             String stringChoice;
             int intChoice;
@@ -270,12 +211,12 @@ public class CharacterUtils {
                 case 2:
                     System.out.print("Enter their race: ");
                     stringChoice = input.nextLine();
-                    characters[characterIndex].setRace(stringChoice);
+                    characters[characterIndex].changeRace(stringChoice);
                     break;
                 case 3:
                     System.out.print("Enter their class: ");
                     stringChoice = input.nextLine();
-                    characters[characterIndex].setClassOfCharacter(stringChoice);
+                    characters[characterIndex].changeClass(stringChoice);
                     break;
                 case 4:
                     System.out.print("Enter their level: ");
@@ -322,5 +263,13 @@ public class CharacterUtils {
                     break;
             }
         }
+    }
+
+    public Character[] getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(Character[] characters) {
+        this.characters = characters;
     }
 }
