@@ -25,7 +25,7 @@ public class Character {
     private int charisma; // the charisma of the character
     private final static int MAX_STRING_LENGTH = 20; // a string in this program can only be 20 characters long
     private final static long RECORD_LENGTH = 152; // the max length of a record is 152 bytes
-    private final Random random; // a random object used to generate random numbers
+    private final static Random random = new Random(); // a random object used to generate random numbers
 
     public Character() {
         name = null;
@@ -39,7 +39,6 @@ public class Character {
         wisdom = -1;
         dexterity = -1;
         charisma = -1;
-        this.random = new Random();
     }
 
     public Character(String name, String race, String classOfCharacter, int level, int hitPoints, int strength, int constitution, int intelligence, int wisdom, int dexterity, int charisma) {
@@ -54,7 +53,6 @@ public class Character {
         this.wisdom = wisdom;
         this.dexterity = dexterity;
         this.charisma = charisma;
-        this.random = new Random();
     }
 
     /** Method Name: diceRoll
@@ -367,6 +365,7 @@ public class Character {
     }
 
     public void setRace(String race) {
+        if (!race.equals("Human") && !race.equals("Elf") && !race.equals("Halfling") && !race.equals("Dwarf") && !race.equals("Orc") && !race.equals("Gnome")) throw new IllegalArgumentException();
         this.race = race;
     }
 
@@ -375,6 +374,7 @@ public class Character {
     }
 
     public void setClassOfCharacter(String classOfCharacter) {
+        if (!classOfCharacter.equals("Warrior") && !classOfCharacter.equals("Bard")  && !classOfCharacter.equals("Rogue") && !classOfCharacter.equals("Cleric") && !classOfCharacter.equals("Ranger") && !classOfCharacter.equals("Mage")) throw new IllegalArgumentException();
         this.classOfCharacter = classOfCharacter;
     }
 

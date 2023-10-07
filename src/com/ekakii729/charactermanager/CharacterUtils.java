@@ -7,6 +7,7 @@
 package com.ekakii729.charactermanager;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class CharacterUtils {
 
@@ -174,7 +175,7 @@ public class CharacterUtils {
         for (Character character : characters) character.display();
     }
 
-    /** Method Name: deleteCharacter
+    /** Method Name: deleteCharacterFromList
      * @Author Abhay Manoj
      * @Date October 7, 2023
      * @Modified October 7, 2023
@@ -185,7 +186,7 @@ public class CharacterUtils {
      * Throws/Exceptions: N/A
      */
 
-    public Character[] deleteCharacter(String characterName, Character[] characters) {
+    public Character[] deleteCharacterFromList(String characterName, Character[] characters) {
         Character[] newCharacters = null; // the new array of characters
         boolean hasBeenFound = false; // checking if the character has been found
         int indexOfCharacter = -1; // index of the character if they are found
@@ -212,16 +213,113 @@ public class CharacterUtils {
      * @Modified October 7, 2023
      * @Description Searches for a character and displays their stats
      * @Parameters characterName - the name of the character characters - list of characters
-     * @Returns N/A, Data Type: Void
+     * @Returns The index of the character, Data Type: Integer
      * Dependencies: N/A
      * Throws/Exceptions: N/A
      */
 
-    public void searchForCharacter(String characterName, Character[] characters) {
-        for (Character character : characters) {
-            if (character.getName().equals(characterName)) {
-                character.display();
-                break;
+    public int searchForCharacter(String characterName, Character[] characters) {
+        boolean hasBeenFound = false; // checking if the character has been found or not
+        for (int i = 0; i < characters.length; i++) {
+            if (characters[i].getName().equals(characterName)) {
+                characters[i].display();
+                hasBeenFound = true;
+                return i;
+            }
+        }
+        if (!hasBeenFound) System.out.println(characterName + " was not found, please try again.");
+        return -1;
+    }
+
+    /** Method Name: addNewCharacterToList
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 7, 2023
+     * @Description Adds new empty character to list
+     * @Parameters characters - list of characters
+     * @Returns The array of characters including new character, Data Type: Character[]
+     * Dependencies: N/A
+     * Throws/Exceptions: N/A
+     */
+
+    public Character[] addNewCharacterToList(Character[] characters) {
+        Character[] newCharacters = createCharacterArray(characters.length + 1); // the new array of characters
+        System.arraycopy(characters, 0, newCharacters, 0, characters.length);
+        int newCharacterIndex = newCharacters.length -1; // the index of the new character
+        newCharacters[newCharacterIndex]  = new Character();
+        newCharacters[newCharacterIndex].setName("John Smith");
+        newCharacters[newCharacterIndex].setRace("Human");
+        newCharacters[newCharacterIndex].setClassOfCharacter("Warrior");
+        return newCharacters;
+    }
+
+    public void updateStats(Scanner input, Character[] characters) {
+        System.out.print("\nEnter the name of the character that you wish to modify: ");
+        int characterIndex = searchForCharacter(input.nextLine(), characters);
+        if (characterIndex != -1) {
+            String stringChoice;
+            int intChoice;
+            System.out.println("\nWhat would you like to modify?\n1. Name\n2. Race\n3. Class\n4. Level \n5. HitPoints \n6. Strength\n7. Constitution\n8. Intelligence\n9. Wisdom\n10. Dexterity\n11. Charisma");
+            intChoice = Integer.parseInt(input.nextLine());
+            switch (intChoice) {
+                case 1:
+                    System.out.print("Enter their name: ");
+                    stringChoice = input.nextLine();
+                    characters[characterIndex].setName(stringChoice);
+                    break;
+                case 2:
+                    System.out.print("Enter their race: ");
+                    stringChoice = input.nextLine();
+                    characters[characterIndex].setRace(stringChoice);
+                    break;
+                case 3:
+                    System.out.print("Enter their class: ");
+                    stringChoice = input.nextLine();
+                    characters[characterIndex].setClassOfCharacter(stringChoice);
+                    break;
+                case 4:
+                    System.out.print("Enter their level: ");
+                    intChoice = Integer.parseInt(input.nextLine());
+                    characters[characterIndex].setLevel(intChoice);
+                    break;
+                case 5:
+                    System.out.print("Enter their HitPoints: ");
+                    intChoice = Integer.parseInt(input.nextLine());
+                    characters[characterIndex].setHitPoints(intChoice);
+                    break;
+                case 6:
+                    System.out.print("Enter their strength: ");
+                    intChoice = Integer.parseInt(input.nextLine());
+                    characters[characterIndex].setStrength(intChoice);
+                    break;
+                case 7:
+                    System.out.print("Enter their constitution: ");
+                    intChoice = Integer.parseInt(input.nextLine());
+                    characters[characterIndex].setConstitution(intChoice);
+                    break;
+                case 8:
+                    System.out.print("Enter their intelligence: ");
+                    intChoice = Integer.parseInt(input.nextLine());
+                    characters[characterIndex].setIntelligence(intChoice);
+                    break;
+                case 9:
+                    System.out.print("Enter their wisdom: ");
+                    intChoice = Integer.parseInt(input.nextLine());
+                    characters[characterIndex].setWisdom(intChoice);
+                    break;
+                case 10:
+                    System.out.print("Enter their dexterity: ");
+                    intChoice = Integer.parseInt(input.nextLine());
+                    characters[characterIndex].setDexterity(intChoice);
+                    break;
+                case 11:
+                    System.out.print("Enter their charisma: ");
+                    intChoice = Integer.parseInt(input.nextLine());
+                    characters[characterIndex].setCharisma(intChoice);
+                    break;
+                default:
+                    System.out.println("Not a valid option, try again.");
+                    break;
             }
         }
     }

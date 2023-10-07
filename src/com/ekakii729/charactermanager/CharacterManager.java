@@ -6,22 +6,23 @@
 
 package com.ekakii729.charactermanager;
 
+import java.util.Scanner;
+
 public class CharacterManager {
     public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
         String tName = "CharacterStats.txt";
         String bName = "Characters.bin";
         CharacterUtils helper = new CharacterUtils();
         int numOfRecords = helper.getTextNumOfRecords(tName);
         Character[] characters = helper.createCharacterArray(numOfRecords);
         helper.readFromTextFile(tName, characters);
-        helper.printAllCharacters(characters);
-        characters = helper.deleteCharacter("Ugh SingleTooth", characters);
+        characters = helper.addNewCharacterToList(characters);
         System.out.println();
-        helper.printAllCharacters(characters);
         helper.writeToFile(bName, characters);
-        numOfRecords = helper.getBinaryNumOfRecords(bName);
-        characters = helper.createCharacterArray(numOfRecords);
         helper.readFromBinaryFile(bName, characters);
+        helper.updateStats(input, characters);
+        input.close();
         System.out.println();
         helper.printAllCharacters(characters);
     }
