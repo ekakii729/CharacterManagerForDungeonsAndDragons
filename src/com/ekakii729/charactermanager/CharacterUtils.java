@@ -165,8 +165,7 @@ public class CharacterUtils {
         for (int i = 0; i < characters.length; i++) {
             if (characters[i].getName().equals(characterName)) {
                 characters[i].display();
-                return i;
-            }
+                return i; }
         } System.out.println(characterName + " was not found, please try again.");
         return -1;
     }
@@ -185,7 +184,7 @@ public class CharacterUtils {
     public void addNewCharacterToList() {
         Character[] newCharacters = new Character[characters.length + 1]; // new array that will contain new character
         System.arraycopy(characters, 0, newCharacters, 0, characters.length);
-        int newCharacterIndex = newCharacters.length -1; // the index of the new character
+        int newCharacterIndex = newCharacters.length - 1; // the index of the new character
         newCharacters[newCharacterIndex] = new Character();
         newCharacters[newCharacterIndex].setName("John Doe"); // base template
         newCharacters[newCharacterIndex].setRace("Human");
@@ -211,8 +210,7 @@ public class CharacterUtils {
             String stringChoice; // if the user enters a string
             int intChoice; // if the user enters an int
             System.out.println("\nWhat would you like to modify?\n1. Name\n2. Race\n3. Class\n4. Level \n5. HitPoints \n6. Strength\n7. Constitution\n8. Intelligence\n9. Wisdom\n10. Dexterity\n11. Charisma");
-            intChoice = Integer.parseInt(input.nextLine());
-            switch (intChoice) {
+            switch (Integer.parseInt(input.nextLine())) {
                 case 1 -> {
                     System.out.print("Enter their name: ");
                     stringChoice = input.nextLine();

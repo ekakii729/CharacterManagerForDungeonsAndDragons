@@ -48,6 +48,7 @@ public class CharacterManager {
 
     public static int getTextNumOfRecords(String fileName) {
         int numberOfRecords = 0; // number of records within the file
+        final int NUMBER_OF_LINES_IN_RECORD = 11; // 11 lines in 1 record
         try {
             BufferedReader recordPointer = new BufferedReader(new FileReader(fileName)); // accesses text file
             while (recordPointer.ready()) {
@@ -58,7 +59,7 @@ public class CharacterManager {
             System.out.println("FILE NOT FOUND ERROR, CHECK WHERE FILE WAS PLACED --> " + e);
         } catch (IOException e) {
             System.out.println("I/O ERROR --> " + e);
-        } return numberOfRecords / 11; // 11 lines in 1 record
+        } return numberOfRecords / NUMBER_OF_LINES_IN_RECORD;
     }
 
     public static void main(String[] args) {

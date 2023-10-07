@@ -158,8 +158,7 @@ public class Character {
             case "Mage" -> increaseHitPoints = diceRoll(MAX_MAGE_INCREASE);
             default -> {
             }
-        }
-        return increaseHitPoints;
+        } return increaseHitPoints;
     }
 
     /** Method Name: levelUp
@@ -216,25 +215,19 @@ public class Character {
             case "Halfling" -> {
                 dexterity -= 2;
                 constitution--;
-            }
-            case "Elf" -> {
+            } case "Elf" -> {
                 dexterity -= 3;
                 constitution += 2;
-            }
-            case "Dwarf" -> constitution -= 3;
+            } case "Dwarf" -> constitution -= 3;
             case "Orc" -> {
                 strength -= 3;
                 constitution--;
-            }
-            case "Gnome" -> {
+            } case "Gnome" -> {
                 intelligence -= 2;
                 wisdom--;
                 strength += 3;
-            }
-            default -> {
-            }
-        }
-        race = NEW_RACE;
+            } default -> {}
+        } race = NEW_RACE;
     }
 
     /** Method Name: changeRace
@@ -254,25 +247,19 @@ public class Character {
             case "Halfling" -> {
                 dexterity += 2;
                 constitution++;
-            }
-            case "Elf" -> {
+            } case "Elf" -> {
                 dexterity += 3;
                 constitution -= 2;
-            }
-            case "Dwarf" -> constitution += 3;
+            } case "Dwarf" -> constitution += 3;
             case "Orc" -> {
                 strength += 3;
                 constitution++;
-            }
-            case "Gnome" -> {
+            } case "Gnome" -> {
                 intelligence += 2;
                 wisdom++;
                 strength -= 3;
-            }
-            default -> {
-            }
-        }
-        race = newRace;
+            } default -> {}
+        }race = newRace;
     }
 
     /**
