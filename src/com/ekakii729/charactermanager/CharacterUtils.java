@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class CharacterUtils {
 
-    private Character[] characters;
+    private Character[] characters; // list of characters
 
     public CharacterUtils() {
 
