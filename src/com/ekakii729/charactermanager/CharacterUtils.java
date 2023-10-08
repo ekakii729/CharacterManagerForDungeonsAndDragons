@@ -12,10 +12,6 @@ public class CharacterUtils {
 
     private Character[] characters; // list of characters
 
-    public CharacterUtils() {
-
-    }
-
     public CharacterUtils(int size) {
         characters = new Character[size];
     }
@@ -61,9 +57,9 @@ public class CharacterUtils {
                 characters[i].readRecord(randomAccessor, i);
             } randomAccessor.close();
         } catch (FileNotFoundException e) {
-            System.out.println("FILE NOT FOUND ERROR, CHECK WHERE FILE WAS PLACED --> " + e);
+            System.out.println("\nFILE NOT FOUND ERROR, CHECK WHERE FILE WAS PLACED --> " + e);
         } catch (IOException e) {
-            System.out.println("I/O ERROR --> " + e);
+            System.out.println("\nI/O ERROR --> " + e);
         }
     }
 
@@ -98,9 +94,9 @@ public class CharacterUtils {
                 i++;
             } reader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("FILE NOT FOUND ERROR, CHECK WHERE FILE WAS PLACED --> " + e);
+            System.out.println("\nFILE NOT FOUND ERROR, CHECK WHERE FILE WAS PLACED --> " + e);
         } catch (IOException e) {
-            System.out.println("I/O ERROR --> " + e);
+            System.out.println("\nI/O ERROR --> " + e);
         }
     }
 
@@ -116,6 +112,8 @@ public class CharacterUtils {
      */
 
     public void printAllCharacters() {
+        if (characters.length == 0) System.out.println("\nThere are no characters currently available. Please add some characters.");
+        System.out.println();
         for (Character character : characters) character.display();
     }
 
@@ -147,7 +145,8 @@ public class CharacterUtils {
                 newCharacters[newCharacterPointer] = characters[i];
                 newCharacterPointer++;
             } characters = newCharacters;
-        } System.out.println(characterName + " was not found. PLease try again.");
+            System.out.println("Character has been deleted.");
+        } else System.out.println("\n" + characterName + " was not found. PLease try again.");
     }
 
     /** Method Name: searchForCharacter
@@ -166,7 +165,7 @@ public class CharacterUtils {
             if (characters[i].getName().equals(characterName)) {
                 characters[i].display();
                 return i; }
-        } System.out.println(characterName + " was not found, please try again.");
+        } System.out.println("\n" + characterName + " was not found, please try again.");
         return -1;
     }
 
@@ -190,6 +189,7 @@ public class CharacterUtils {
         newCharacters[newCharacterIndex].setRace("Human");
         newCharacters[newCharacterIndex].setClassOfCharacter("Warrior");
         characters = newCharacters;
+        System.out.println("\nBase character template has been added by the name of \"John Doe\", please edit stats using menu.");
     }
 
     /** Method Name: updateStats
@@ -205,58 +205,49 @@ public class CharacterUtils {
 
     public void updateStats(Scanner input) {
         System.out.print("\nEnter the name of the character that you wish to modify: ");
-        int characterIndex = searchForCharacter(input.nextLine()); // index of the character that is being searched for
+        int characterIndex = searchForCharacter(input.nextLine()); // index of the character that is being modified
         if (characterIndex != -1) {
-            String stringChoice; // if the user enters a string
-            int intChoice; // if the user enters an int
-            System.out.println("\nWhat would you like to modify?\n1. Name\n2. Race\n3. Class\n4. Level \n5. HitPoints \n6. Strength\n7. Constitution\n8. Intelligence\n9. Wisdom\n10. Dexterity\n11. Charisma");
-            switch (Integer.parseInt(input.nextLine())) {
-                case 1 -> {
-                    System.out.print("Enter their name: ");
-                    stringChoice = input.nextLine();
-                    characters[characterIndex].setName(stringChoice);
-                } case 2 -> {
-                    System.out.print("Enter their race: ");
-                    stringChoice = input.nextLine();
-                    characters[characterIndex].changeRace(stringChoice);
-                } case 3 -> {
-                    System.out.print("Enter their class: ");
-                    stringChoice = input.nextLine();
-                    characters[characterIndex].changeClass(stringChoice);
-                } case 4 -> {
-                    System.out.print("Enter their level: ");
-                    intChoice = Integer.parseInt(input.nextLine());
-                    characters[characterIndex].setLevel(intChoice);
-                } case 5 -> {
-                    System.out.print("Enter their HitPoints: ");
-                    intChoice = Integer.parseInt(input.nextLine());
-                    characters[characterIndex].setHitPoints(intChoice);
-                } case 6 -> {
-                    System.out.print("Enter their strength: ");
-                    intChoice = Integer.parseInt(input.nextLine());
-                    characters[characterIndex].setStrength(intChoice);
-                } case 7 -> {
-                    System.out.print("Enter their constitution: ");
-                    intChoice = Integer.parseInt(input.nextLine());
-                    characters[characterIndex].setConstitution(intChoice);
-                } case 8 -> {
-                    System.out.print("Enter their intelligence: ");
-                    intChoice = Integer.parseInt(input.nextLine());
-                    characters[characterIndex].setIntelligence(intChoice);
-                } case 9 -> {
-                    System.out.print("Enter their wisdom: ");
-                    intChoice = Integer.parseInt(input.nextLine());
-                    characters[characterIndex].setWisdom(intChoice);
-                } case 10 -> {
-                    System.out.print("Enter their dexterity: ");
-                    intChoice = Integer.parseInt(input.nextLine());
-                    characters[characterIndex].setDexterity(intChoice);
-                } case 11 -> {
-                    System.out.print("Enter their charisma: ");
-                    intChoice = Integer.parseInt(input.nextLine());
-                    characters[characterIndex].setCharisma(intChoice);
-                } default -> System.out.println("Not a valid option, try again.");
-            }
+            do {
+                System.out.println("\nWhat would you like to modify?\n1. Name\n2. Race\n3. Class\n4. Level \n5. HitPoints \n6. Strength\n7. Constitution\n8. Intelligence\n9. Wisdom\n10. Dexterity\n11. Charisma");
+                switch (Integer.parseInt(input.nextLine())) {
+                    case 1 -> {
+                        System.out.print("\nEnter their name: ");
+                        characters[characterIndex].setName(input.nextLine());
+                    } case 2 -> {
+                        System.out.print("\nEnter their race: ");
+                        characters[characterIndex].changeRace(input.nextLine());
+                    } case 3 -> {
+                        System.out.print("\nEnter their class: ");
+                        characters[characterIndex].changeClass(input.nextLine());
+                    } case 4 -> {
+                        System.out.print("\nEnter their level: ");
+                        characters[characterIndex].setLevel(Integer.parseInt(input.nextLine()));
+                    } case 5 -> {
+                        System.out.print("\nEnter their HitPoints: ");
+                        characters[characterIndex].setHitPoints(Integer.parseInt(input.nextLine()));
+                    } case 6 -> {
+                        System.out.print("\nEnter their strength: ");
+                        characters[characterIndex].setStrength(Integer.parseInt(input.nextLine()));
+                    } case 7 -> {
+                        System.out.print("\nEnter their constitution: ");
+                        characters[characterIndex].setConstitution(Integer.parseInt(input.nextLine()));
+                    } case 8 -> {
+                        System.out.print("\nEnter their intelligence: ");
+                        characters[characterIndex].setIntelligence(Integer.parseInt(input.nextLine()));
+                    } case 9 -> {
+                        System.out.print("\nEnter their wisdom: ");
+                        characters[characterIndex].setWisdom(Integer.parseInt(input.nextLine()));
+                    } case 10 -> {
+                        System.out.print("\nEnter their dexterity: ");
+                        characters[characterIndex].setDexterity(Integer.parseInt(input.nextLine()));
+                    } case 11 -> {
+                        System.out.print("\nEnter their charisma: ");
+                        characters[characterIndex].setCharisma(Integer.parseInt(input.nextLine()));
+                    } default -> System.out.println("\nNot a valid option, try again.");
+                } System.out.print("Would you like to continue editing this character? Enter 'y' or 'n': ");
+            } while (input.nextLine().charAt(0) != 'n');
+            System.out.println();
+            characters[characterIndex].display();
         }
     }
 
@@ -264,7 +255,4 @@ public class CharacterUtils {
         return characters;
     }
 
-    public void setCharacters(Character[] characters) {
-        this.characters = characters;
-    }
 }
