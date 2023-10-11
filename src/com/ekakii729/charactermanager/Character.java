@@ -41,20 +41,6 @@ public class Character {
         charisma = -1;
     }
 
-    public Character(String name, String race, String classOfCharacter, int level, int hitPoints, int strength, int constitution, int intelligence, int wisdom, int dexterity, int charisma) {
-        this.name = name;
-        this.race = race;
-        this.classOfCharacter = classOfCharacter;
-        this.level = level;
-        this.hitPoints = hitPoints;
-        this.strength = strength;
-        this.constitution = constitution;
-        this.intelligence = intelligence;
-        this.wisdom = wisdom;
-        this.dexterity = dexterity;
-        this.charisma = charisma;
-    }
-
     /** Method Name: diceRoll
      * @Author Abhay Manoj
      * @Date October 2, 2023
@@ -259,7 +245,7 @@ public class Character {
                 wisdom++;
                 strength -= 3;
             } default -> {}
-        }race = newRace;
+        } race = newRace;
     }
 
     /**
@@ -370,6 +356,7 @@ public class Character {
         System.out.printf("Name: %s, Race: %s, Class: %s, Level: %d, HitPoints: %d, Strength: %d, Constitution: %d, Intelligence: %d, Wisdom: %d, Dexterity: %d, Charisma: %d\n", name, race, classOfCharacter, level, hitPoints, strength, constitution, intelligence, wisdom, dexterity, charisma);
     }
 
+
     public String getName() {
         return name;
     }
@@ -459,10 +446,6 @@ public class Character {
 
     public void setCharisma(int charisma) {
         this.charisma = charisma;
-    }
-
-    public static int getMaxStringLength() {
-        return MAX_STRING_LENGTH;
     }
 
     public static long getRecordLength() {

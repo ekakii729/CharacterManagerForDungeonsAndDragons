@@ -1,7 +1,7 @@
 /*
  * Author: Abhay Manoj
  * Purpose: Utility class for the Character Manager
- * Date of Creation: October 04, 2023
+ * Date of Creation: October 07, 2023
  */
 
 package com.ekakii729.charactermanager;
@@ -10,74 +10,29 @@ import java.util.Scanner;
 
 public class CharacterUtils {
 
-    private Character[] characters; // list of characters
+    private Character[] characters; // the list of characters
+    private String binaryFileName; //  the name of the binary file that is being written to
 
     public CharacterUtils(int size) {
         characters = new Character[size];
-    }
-
-    /** Method Name: writeToFile
-     * @Author Abhay Manoj
-     * @Date October 7, 2023
-     * @Modified October 7, 2023
-     * @Description Writes content of character array to binary file
-     * @Parameters fileName - name of the file
-     * @Returns N/A, Data Type: Void
-     * Dependencies: RandomAccessFile
-     * Throws/Exceptions: IOException
-     */
-
-    public void writeToFile(String fileName) {
-        try {
-            RandomAccessFile randomAccessor = new RandomAccessFile(fileName, "rw"); // accesses binary file
-            randomAccessor.setLength(characters.length * Character.getRecordLength());
-            for (int i = 0; i < characters.length; i++) characters[i].writeRecord(randomAccessor, i);
-            randomAccessor.close();
-        } catch (IOException e) {
-            System.out.println("I/O ERROR --> " + e);
-        }
-    }
-
-    /** Method Name: readFromBinaryFile
-     * @Author Abhay Manoj
-     * @Date October 7, 2023
-     * @Modified October 7, 2023
-     * @Description Reads content of binary file and writes to character array
-     * @Parameters fileName - name of the file
-     * @Returns N/A, Data Type: Void
-     * Dependencies: RandomAccessFile
-     * Throws/Exceptions: FileNotFoundException, IOException
-     */
-
-    public void readFromBinaryFile(String fileName) {
-        try {
-            RandomAccessFile randomAccessor = new RandomAccessFile(fileName, "rw"); // access binary file
-            for (int i = 0; i < characters.length; i++) {
-                characters[i] = new Character();
-                characters[i].readRecord(randomAccessor, i);
-            } randomAccessor.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("\nFILE NOT FOUND ERROR, CHECK WHERE FILE WAS PLACED --> " + e);
-        } catch (IOException e) {
-            System.out.println("\nI/O ERROR --> " + e);
-        }
+        binaryFileName = "myCharacters.bin";
     }
 
     /** Method Name: readFromTextFile
      * @Author Abhay Manoj
      * @Date October 7, 2023
-     * @Modified October 7, 2023
-     * @Description Reads content of text file and writes to character array
+     * @Modified October 10, 2023
+     * @Description Reads content of text file and writes to character array while writing to new binary file
      * @Parameters fileName - name of the file
      * @Returns N/A, Data Type: Void
      * Dependencies: BufferedReader, FileReader
      * Throws/Exceptions: FileNotFoundException, IOException
      */
 
-    public void readFromTextFile(String fileName) {
+    public void userTextFileChoiceToArray(String fileName) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(fileName)); // accesses text file
-            int i = 0; // counter to access indexes of character array
+            BufferedReader reader = new BufferedReader(new FileReader(fileName)); // used to access the text file
+            int i = 0; // used to access indexes in the character array
             while (reader.ready()) {
                 characters[i] = new Character();
                 characters[i].setName(reader.readLine());
@@ -93,6 +48,8 @@ public class CharacterUtils {
                 characters[i].setCharisma(Integer.parseInt(reader.readLine()));
                 i++;
             } reader.close();
+            writeToFile();
+            System.out.println("\nFile has been successfully read.");
         } catch (FileNotFoundException e) {
             System.out.println("\nFILE NOT FOUND ERROR, CHECK WHERE FILE WAS PLACED --> " + e);
         } catch (IOException e) {
@@ -100,112 +57,255 @@ public class CharacterUtils {
         }
     }
 
-    /** Method Name: printAllCharacters
+    /** Method Name: readKnownBinaryFileToArray
      * @Author Abhay Manoj
      * @Date October 7, 2023
-     * @Modified October 7, 2023
-     * @Description Prints all characters in array
+     * @Modified October 10, 2023
+     * @Description Reads content of binary file and writes to character array
      * @Parameters N/A
+     * @Returns N/A, Data Type: Void
+     * Dependencies: RandomAccessFile
+     * Throws/Exceptions: FileNotFoundException, IOException
+     */
+
+    public void readKnownBinaryFileToArray() {
+        try {
+            RandomAccessFile randomAccessor = new RandomAccessFile(binaryFileName, "rw"); // used to read binary file
+            for (int i = 0; i < characters.length; i++) {
+                characters[i] = new Character();
+                characters[i].readRecord(randomAccessor, i);
+            } randomAccessor.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("\nFILE NOT FOUND ERROR, CHECK WHERE FILE WAS PLACED --> " + e);
+        } catch (IOException e) {
+            System.out.println("\nI/O ERROR --> " + e);
+        }
+    }
+
+    /** Method Name: userBinaryFileChoiceToArray
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 10, 2023
+     * @Description Reads content of user chosen binary file and writes to character array
+     * @Parameters fileName - name of the file
      * @Returns N/A, Data Type: Void
      * Dependencies: N/A
      * Throws/Exceptions: N/A
      */
 
-    public void printAllCharacters() {
-        if (characters.length == 0) System.out.println("\nThere are no characters currently available. Please add some characters.");
-        System.out.println();
-        for (Character character : characters) character.display();
+    public void userBinaryFileChoiceToArray(String fileName) {
+        binaryFileName = fileName;
+        readKnownBinaryFileToArray();
+    }
+
+    /** Method Name: writeToFile
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 10, 2023
+     * @Description Writes content of character array to binary file
+     * @Parameters N/A
+     * @Returns N/A, Data Type: Void
+     * Dependencies: RandomAccessFile
+     * Throws/Exceptions: IOException
+     */
+    public void writeToFile() {
+        try {
+            RandomAccessFile randomAccessor = new RandomAccessFile(binaryFileName, "rw"); // accesses binary file
+            randomAccessor.setLength(characters.length * Character.getRecordLength());
+            for (int i = 0; i < characters.length; i++) characters[i].writeRecord(randomAccessor, i);
+            randomAccessor.close();
+        } catch (IOException e) {
+            System.out.println("I/O ERROR --> " + e);
+        }
+    }
+
+    /** Method Name: userWriteToFile
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 10, 2023
+     * @Description Writes content of character array to binary file of user's choice
+     * @Parameters input - used to take user input
+     * @Returns N/A, Data Type: Void
+     * Dependencies: Scanner
+     * Throws/Exceptions: N/A
+     */
+
+    public void userWriteToFile(Scanner input) {
+        System.out.print("\nEnter EXACT name of file (ex. characterStats.txt, myCharacters.bin): ");
+        binaryFileName = input.nextLine();
+        writeToFile();
+        System.out.println("The file has been written to.");
+    }
+
+    /** Method Name: getCharacterIndex
+     * @Author Abhay Manoj
+     * @Date October 10, 2023
+     * @Modified October 10, 2023
+     * @Description Gets index of a character in the array
+     * @Parameters input - used to take user input
+     * @Returns The index of the character, Data Type: Integer
+     * Dependencies: Scanner
+     * Throws/Exceptions: N/A
+     */
+
+    private int getCharacterIndex(Scanner input) {
+        System.out.print("\nEnter EXACT name of character (ex. Magnus Carlsen): ");
+        String characterName = input.nextLine(); // name of the character
+        for (int i = 0; i < characters.length; i++) {
+            if (characters[i].getName().equals(characterName)) {
+                return i; }
+        } System.out.println("\nCharacter was not found. Please check your spelling.");
+        return -1;
     }
 
     /** Method Name: deleteCharacterFromList
      * @Author Abhay Manoj
      * @Date October 7, 2023
-     * @Modified October 7, 2023
-     * @Description Deletes a character by their name
-     * @Parameters characterName - the name of the character
+     * @Modified October 10, 2023
+     * @Description Deletes a character
+     * @Parameters input - used to take user input
      * @Returns N/A, Data Type: Void
-     * Dependencies: N/A
+     * Dependencies: Scanner
      * Throws/Exceptions: N/A
      */
 
-    public void deleteCharacterFromList(String characterName) {
-        Character[] newCharacters = null; // the new array of characters
-        boolean hasBeenFound = false; // checking if the character has been found
-        int indexOfCharacter = -1; // index of the character if they are found
-        for (int i = 0; i < characters.length; i++) {
-            if (characters[i].getName().equals(characterName)) {
-                indexOfCharacter = i;
-                hasBeenFound = true;
-                newCharacters = new Character[characters.length - 1];
-                break; }
-        } if (hasBeenFound) {
-            int newCharacterPointer = 0; // pointer to access indexes of new character array
+    public void deleteCharacterFromList(Scanner input) {
+        int characterIndex = getCharacterIndex(input); // index of the character
+        if (characterIndex != -1) {
+            Character[] newCharacters = new Character[characters.length - 1]; // new list that is one element smaller than before
+            int newArrayPointer = 0; // pointer used to access elements in new characters array
             for (int i = 0; i < characters.length; i++) {
-                if (i == indexOfCharacter) continue;
-                newCharacters[newCharacterPointer] = characters[i];
-                newCharacterPointer++;
+                if (i == characterIndex) continue;
+                newCharacters[newArrayPointer] = characters[i];
+                newArrayPointer++;
             } characters = newCharacters;
-            System.out.println("Character has been deleted.");
-        } else System.out.println("\n" + characterName + " was not found. PLease try again.");
+            writeToFile();
+            readKnownBinaryFileToArray();
+            System.out.println("\nCharacter has been deleted.");
+        }
     }
 
-    /** Method Name: searchForCharacter
+    /** Method Name: writeCharacterRecord
      * @Author Abhay Manoj
-     * @Date October 7, 2023
-     * @Modified October 7, 2023
-     * @Description Searches for a character and displays their stats
-     * @Parameters characterName - the name of the character
-     * @Returns The index of the character, Data Type: Integer
-     * Dependencies: N/A
-     * Throws/Exceptions: N/A
+     * @Date October 10, 2023
+     * @Modified October 10, 2023
+     * @Description Writes a single character to the binary file
+     * @Parameters numberOfRecord - the index of the character
+     * @Returns N/A, Data Type: Void
+     * Dependencies: RandomAccessFile
+     * Throws/Exceptions: IOException
      */
 
-    public int searchForCharacter(String characterName) {
-        for (int i = 0; i < characters.length; i++) {
-            if (characters[i].getName().equals(characterName)) {
-                characters[i].display();
-                return i; }
-        } System.out.println("\n" + characterName + " was not found, please try again.");
-        return -1;
+    private void writeCharacterRecord(int numberOfRecord) throws IOException {
+        RandomAccessFile randomAccessor = new RandomAccessFile(binaryFileName,"rw"); // used to write record to file
+        randomAccessor.seek(numberOfRecord * Character.getRecordLength());
+        characters[numberOfRecord].writeRecord(randomAccessor, numberOfRecord);
     }
 
     /** Method Name: addNewCharacterToList
      * @Author Abhay Manoj
      * @Date October 7, 2023
-     * @Modified October 7, 2023
-     * @Description Adds new empty character to character array
-     * @Parameters characters - list of characters
+     * @Modified October 10, 2023
+     * @Description Adds new character to list and file
+     * @Parameters input - used to take user input
      * @Returns N/A, Data Type: Void
-     * Dependencies: N/A
-     * Throws/Exceptions: N/A
+     * Dependencies: Scanner
+     * Throws/Exceptions: IOException
      */
 
-    public void addNewCharacterToList() {
-        Character[] newCharacters = new Character[characters.length + 1]; // new array that will contain new character
+    public void addNewCharacter(Scanner input) throws IOException {
+        int newCharacterIndex = characters.length; // the index of the new character that will be added
+        Character[] newCharacters = new Character[characters.length + 1]; // new list that is one element bigger than before
         System.arraycopy(characters, 0, newCharacters, 0, characters.length);
-        int newCharacterIndex = newCharacters.length - 1; // the index of the new character
         newCharacters[newCharacterIndex] = new Character();
-        newCharacters[newCharacterIndex].setName("John Doe"); // base template
-        newCharacters[newCharacterIndex].setRace("Human");
-        newCharacters[newCharacterIndex].setClassOfCharacter("Warrior");
+        System.out.print("\nEnter the EXACT name of your character (ex. Magnus Carlsen): ");
+        newCharacters[newCharacterIndex].setName(input.nextLine());
+        System.out.print("\nEnter the race of your character (Human, Halfling, Elf, Orc, Dwarf, Gnome): ");
+        newCharacters[newCharacterIndex].setRace(input.nextLine());
+        System.out.print("\nEnter the class of your character (Warrior, Mage, Rogue, Cleric, Bard, Ranger): ");
+        newCharacters[newCharacterIndex].setClassOfCharacter(input.nextLine());
+        newCharacters[newCharacterIndex].generateStats();
+        newCharacters[newCharacterIndex].setLevel(1);
         characters = newCharacters;
-        System.out.println("\nBase character template has been added by the name of \"John Doe\", please edit stats using menu.");
+        writeCharacterRecord(newCharacterIndex);
+        System.out.println("\nCharacter has been added with randomly generated stats.");
+        newCharacters[newCharacterIndex].display();
+    }
+
+    /** Method Name: changeRace
+     * @Author Abhay Manoj
+     * @Date October 10, 2023
+     * @Modified October 10, 2023
+     * @Description Changes race of character
+     * @Parameters input - used to take user input
+     * @Returns N/A, Data Type: Void
+     * Dependencies: Scanner
+     * Throws/Exceptions: IOException
+     */
+
+    public void changeRace(Scanner input) throws IOException {
+        int characterIndex = getCharacterIndex(input); // index of the character
+        if (characterIndex != -1) {
+            System.out.print("\nEnter desired race (Human, Halfling, Elf, Orc, Dwarf, Gnome): ");
+            characters[characterIndex].changeRace(input.nextLine());
+            writeCharacterRecord(characterIndex);
+        }
+    }
+
+    /** Method Name: changeClass
+     * @Author Abhay Manoj
+     * @Date October 10, 2023
+     * @Modified October 10, 2023
+     * @Description Changes race of character
+     * @Parameters input - used to take user input
+     * @Returns N/A, Data Type: Void
+     * Dependencies: Scanner
+     * Throws/Exceptions: IOException
+     */
+
+    public void changeClass(Scanner input) throws IOException {
+        int characterIndex = getCharacterIndex(input); // index of the character
+        if (characterIndex != -1) {
+            System.out.print("\nEnter desired class (Warrior, Mage, Rogue, Cleric, Bard, Ranger): ");
+            characters[characterIndex].changeClass(input.nextLine());
+            writeCharacterRecord(characterIndex);
+        }
+    }
+
+    /** Method Name: updateLevel
+     * @Author Abhay Manoj
+     * @Date October 10, 2023
+     * @Modified October 10, 2023
+     * @Description updates level of a character
+     * @Parameters input - used to take user input
+     * @Returns N/A, Data Type: Void
+     * Dependencies: Scanner
+     * Throws/Exceptions: IOException
+     */
+
+    public void updateLevel(Scanner input) throws IOException {
+        int characterIndex = getCharacterIndex(input); // index of the character
+        if (characterIndex != -1) {
+            System.out.print("\nEnter new level of character: ");
+            int numberOfLevels = Integer.parseInt(input.nextLine()) - characters[characterIndex].getLevel(); // number of new levels to be added to character
+            characters[characterIndex].levelUp(numberOfLevels);
+            writeCharacterRecord(characterIndex);
+        }
     }
 
     /** Method Name: updateStats
      * @Author Abhay Manoj
      * @Date October 7, 2023
-     * @Modified October 7, 2023
+     * @Modified October 10, 2023
      * @Description Submenu to update stats of a character
-     * @Parameters N/A
+     * @Parameters input - used to take user input
      * @Returns N/A, Data Type: Void
-     * Dependencies: N/A
-     * Throws/Exceptions: N/A
+     * Dependencies: Scanner
+     * Throws/Exceptions: IOException
      */
 
-    public void updateStats(Scanner input) {
-        System.out.print("\nEnter the name of the character that you wish to modify: ");
-        int characterIndex = searchForCharacter(input.nextLine()); // index of the character that is being modified
+    public void updateStats(Scanner input) throws IOException {
+        int characterIndex = getCharacterIndex(input); // index of the character
         if (characterIndex != -1) {
             do {
                 System.out.println("\nWhat would you like to modify?\n1. Name\n2. Race\n3. Class\n4. Level \n5. HitPoints \n6. Strength\n7. Constitution\n8. Intelligence\n9. Wisdom\n10. Dexterity\n11. Charisma");
@@ -246,13 +346,45 @@ public class CharacterUtils {
                     } default -> System.out.println("\nNot a valid option, try again.");
                 } System.out.print("Would you like to continue editing this character? Enter 'y' or 'n': ");
             } while (input.nextLine().charAt(0) != 'n');
-            System.out.println();
+            writeCharacterRecord(characterIndex);
             characters[characterIndex].display();
         }
     }
 
-    public Character[] getCharacters() {
-        return characters;
+    /** Method Name: printCharacter
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 10, 2023
+     * @Description Prints out a single character and their attributes
+     * @Parameters input - used to take user input
+     * @Returns N/A, Data Type: Void
+     * Dependencies: Scanner
+     * Throws/Exceptions: N/A
+     */
+
+    public void printCharacter(Scanner input) {
+        int characterIndex = getCharacterIndex(input); // index of the character
+        if (characterIndex != -1) getCharacterList()[characterIndex].display();
     }
 
+    /** Method Name: printCharacter
+     * @Author Abhay Manoj
+     * @Date October 7, 2023
+     * @Modified October 10, 2023
+     * @Description Prints out all characters and attributes
+     * @Parameters N/A
+     * @Returns N/A, Data Type: Void
+     * Dependencies: N/A
+     * Throws/Exceptions: N/A
+     */
+
+    public void printAllCharacters() {
+        System.out.println();
+        if (characters.length == 0) System.out.println("\nThere are no characters currently available. Please add some characters.");
+        else for (Character character : characters) character.display();
+    }
+
+    public Character[] getCharacterList() {
+        return characters;
+    }
 }
